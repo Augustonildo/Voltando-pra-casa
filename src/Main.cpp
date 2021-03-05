@@ -1,8 +1,6 @@
-#include <iostream>
+#include "Planeta.hpp"
 #include <fstream>
 #include <sstream>
-
-using namespace std;
 
 int main(int argc, char* argv[]) {
     istringstream stream;
@@ -12,20 +10,28 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
+    int numeroLinhas;
+    try {
+        numeroLinhas = atoi(argv[2]);
+    } catch (const string e){
+        cout << "Erro ao tentar converter número de linhas para valor inteiro. Por favor, verifique o parâmetro correspondente. " << endl;
+        cout << e << endl;
+        return -1; 
+    }
+
     ifstream arqEntrada(argv[1]); 
     string linha_entrada = "";
     string nomePlaneta = "";
     int distancia;
 
-    //TODO Criar Lista de Planeta de tamanho argv[2]
+    Planeta planetas[numeroLinhas];
     int i = 0;
     if(arqEntrada.is_open()){
         while(i < atoi(argv[2])){
             getline(arqEntrada, linha_entrada);
             stream = istringstream(linha_entrada);
             stream >> nomePlaneta >> distancia;
-
-            //TODO Planeta[i] = new Planeta(nomePlaneta, distancia);
+            planetas[i] = Planeta(nomePlaneta, distancia);
             i++;
         }
         arqEntrada.close();
@@ -35,8 +41,10 @@ int main(int argc, char* argv[]) {
     }
     
     // TODO: Ordenar
-
-    // TODO: Imprimir 7 primeiras posições
+    
+    for(int j = 0; j < 7; j++){
+        cout << planetas[j].GetNome() << " " << planetas[j].GetDistancia() << endl; 
+    }
 
     return 0;
 }
