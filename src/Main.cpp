@@ -2,6 +2,35 @@
 #include <fstream>
 #include <sstream>
 
+#define ALGORITMO_ORDENACAO 1
+
+// ALGORITMO_ORDENACAO  1
+void insertionSort(Planeta* planetas, int numeroPlanetas){
+    int i,j;
+    Planeta aux;
+    for (i = 1; i < numeroPlanetas; i++) {
+        aux = planetas[i];
+        j = i - 1;
+        while (( j >= 0 ) && (aux.GetDistancia() < planetas[j].GetDistancia())) {
+            planetas[j + 1] = planetas[j];
+            j--;
+        }
+        planetas[j + 1] = aux;
+    }
+} 
+
+// ALGORITMO_ORDENACAO  2
+void mergeSort(Planeta* planetas, int numeroPlanetas){ }
+
+// ALGORITMO_ORDENACAO  3
+void quickSort(Planeta* planetas, int numeroPlanetas){ }
+
+// ALGORITMO_ORDENACAO  4
+void quickSortModificado(Planeta* planetas, int numeroPlanetas){ }
+
+// ALGORITMO_ORDENACAO  5
+void adefinirSort(Planeta* planetas, int numeroPlanetas){ }
+
 int main(int argc, char* argv[]) {
     istringstream stream;
 
@@ -40,7 +69,28 @@ int main(int argc, char* argv[]) {
         return -1;
     }
     
-    // TODO: Ordenar
+    switch (ALGORITMO_ORDENACAO)
+    {
+        case 1:
+            insertionSort(planetas, numeroLinhas);
+            break;
+        case 2:
+            mergeSort(planetas, numeroLinhas);
+            break;
+        case 3:
+            quickSort(planetas, numeroLinhas);
+            break;
+        case 4:
+            quickSortModificado(planetas, numeroLinhas);
+            break;
+        case 5:
+            adefinirSort(planetas, numeroLinhas);
+            break;
+        
+        default:
+            cout << "Erro! Algoritmo de ordenação definido incorretamente" << endl;
+            return -1;
+    }
     
     for(int j = 0; j < 7; j++){
         cout << planetas[j].GetNome() << " " << planetas[j].GetDistancia() << endl; 
