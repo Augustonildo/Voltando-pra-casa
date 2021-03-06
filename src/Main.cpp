@@ -1,8 +1,9 @@
 #include "Planeta.hpp"
+#include "Pilha.hpp"
 #include <fstream>
 #include <sstream>
 
-#define ALGORITMO_ORDENACAO 3
+#define ALGORITMO_ORDENACAO 4
 
 // ALGORITMO_ORDENACAO  1
 void insertionSort(Planeta* planetas, int numeroPlanetas){
@@ -95,7 +96,37 @@ void quickSort(Planeta* planetas, int numeroPlanetas){
 }
 
 // ALGORITMO_ORDENACAO  4
-void quickSortModificado(Planeta* planetas, int numeroPlanetas){ }
+void quickSortModificado(Planeta* planetas, int numeroPlanetas){
+    Pilha<Item> pilha = Pilha<Item>(numeroPlanetas);
+    Item item;
+    int esquerda, direita, i, j;
+    esquerda = 0;
+    direita = numeroPlanetas-1;
+    item.direita = direita;
+    item.esquerda = esquerda;
+    pilha.Empilha(item);
+    do {
+        if (direita > esquerda) {
+            particao(esquerda, direita, &i, &j, planetas);
+            if ((j-esquerda)>(direita-i)) {
+                item.direita = j;
+                item.esquerda = esquerda;
+                pilha.Empilha(item);
+                esquerda = i;
+            }
+        else {
+            item.esquerda = i;
+            item.direita = direita;
+            pilha.Empilha(item);
+            direita = j;
+        }}
+        else {
+            item = pilha.Desempilha();
+            direita = item.direita;
+            esquerda = item.esquerda;
+        }
+    } while (!pilha.Vazia());
+}
 
 // ALGORITMO_ORDENACAO  5
 void adefinirSort(Planeta* planetas, int numeroPlanetas){ }
