@@ -3,7 +3,7 @@
 #include <fstream>
 #include <sstream>
 
-#define ALGORITMO_ORDENACAO 4
+#define ALGORITMO_ORDENACAO 5
 
 // ALGORITMO_ORDENACAO  1
 void insertionSort(Planeta* planetas, int numeroPlanetas){
@@ -129,7 +129,39 @@ void quickSortModificado(Planeta* planetas, int numeroPlanetas){
 }
 
 // ALGORITMO_ORDENACAO  5
-void adefinirSort(Planeta* planetas, int numeroPlanetas){ }
+void cocktailSort(Planeta* planetas, int numeroPlanetas){
+    int bottom = 0;
+    int top = numeroPlanetas - 1;
+    int i = 0;
+    bool swapped = false;
+    Planeta aux;
+    while(!swapped && bottom < top)
+    {
+        swapped = true;
+        for(i = bottom; i < top; i=i+1)
+        {
+            if(planetas[i].GetDistancia() > planetas[i+1].GetDistancia())   //indo pra direita:testa se o próximo é maior
+            {   
+                aux=planetas[i];
+                planetas[i]=planetas[i+1];
+                planetas[i+1]=aux;
+                swapped = false;
+            }
+        }
+        top--; 
+        for(i=top; i > bottom; i=i-1)
+        {  
+            if(planetas[i].GetDistancia() < planetas[i-1].GetDistancia()) 
+            {
+                aux = planetas[i];
+                planetas[i] = planetas[i-1];
+                planetas[i-1] = aux;
+                swapped = 0;
+            }
+        }
+        bottom++;  
+    }
+}
 
 int main(int argc, char* argv[]) {
     istringstream stream;
@@ -184,7 +216,7 @@ int main(int argc, char* argv[]) {
             quickSortModificado(planetas, numeroLinhas);
             break;
         case 5:
-            adefinirSort(planetas, numeroLinhas);
+            cocktailSort(planetas, numeroLinhas);
             break;
         
         default:
